@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
 import '../providers/movie_provider.dart';
