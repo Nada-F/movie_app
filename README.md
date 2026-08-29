@@ -82,6 +82,7 @@ movie_app/
 └── README.md
 ```
 
+
 ### Folder Description
 
 * `models` - Contains the movie data model.
