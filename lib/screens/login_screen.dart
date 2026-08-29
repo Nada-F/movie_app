@@ -174,18 +174,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // ==============================
-          // BACKGROUND IMAGE
-          // ==============================
+         
 
           Image.asset(
             'assets/images/login_background.jpeg',
             fit: BoxFit.cover,
           ),
 
-          // ==============================
-          // DARK OVERLAY
-          // ==============================
+         
 
           Container(
             decoration: const BoxDecoration(
@@ -206,9 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          // ==============================
-          // LOGIN CONTENT
-          // ==============================
 
           SafeArea(
             child: Center(
@@ -245,14 +238,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment:
                             CrossAxisAlignment.stretch,
                         children: [
-                          // ==============================
-// MOVIE APP BRAND
-// ==============================
-
 Center(
   child: Column(
     children: [
-      // MOVIE APP IMAGE
+     
       ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Image.asset(
@@ -265,7 +254,7 @@ Center(
 
       const SizedBox(height: 18),
 
-      // APP NAME
+     
       RichText(
         textAlign: TextAlign.center,
         text: const TextSpan(
@@ -308,10 +297,7 @@ Center(
   ),
 ),
 
-                          // ==============================
-                          // EMAIL
-                          // ==============================
-
+                        
                           const Text(
                             'Email',
                             style: TextStyle(
@@ -352,9 +338,6 @@ Center(
 
                           const SizedBox(height: 18),
 
-                          // ==============================
-                          // PASSWORD
-                          // ==============================
 
                           const Text(
                             'Password',
@@ -403,10 +386,6 @@ Center(
                           ),
 
                           const SizedBox(height: 28),
-
-                          // ==============================
-                          // SIGN IN BUTTON
-                          // ==============================
 
                           SizedBox(
                             height: 54,
@@ -460,10 +439,6 @@ Center(
                           ),
 
                           const SizedBox(height: 26),
-
-                          // ==============================
-                          // SIGN UP
-                          // ==============================
 
                           Row(
                             mainAxisAlignment:
