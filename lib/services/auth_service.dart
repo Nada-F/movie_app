@@ -3,9 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // =========================
-  // SIGN UP
-  // =========================
+ 
   Future<User?> signUp(String email, String password) async {
     try {
       final UserCredential result =
@@ -16,18 +14,13 @@ class AuthService {
 
       return result.user;
     } on FirebaseAuthException {
-      // مهم جدًا:
-      // نعيد نفس FirebaseAuthException
-      // حتى SignupScreen يقدر يعرف نوع الخطأ
-      rethrow;
+           rethrow;
     } catch (e) {
       throw Exception('Sign up failed: $e');
     }
   }
 
-  // =========================
-  // LOGIN
-  // =========================
+  
   Future<User?> login(String email, String password) async {
     try {
       final UserCredential result =
@@ -44,9 +37,7 @@ class AuthService {
     }
   }
 
-  // =========================
-  // LOGOUT
-  // =========================
+  
   Future<void> logout() async {
     try {
       await _auth.signOut();
@@ -57,16 +48,12 @@ class AuthService {
     }
   }
 
-  // =========================
-  // CURRENT USER
-  // =========================
+  
   User? get currentUser {
     return _auth.currentUser;
   }
 
-  // =========================
-  // CHECK LOGIN
-  // =========================
+  
   bool get isLoggedIn {
     return _auth.currentUser != null;
   }
