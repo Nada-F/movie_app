@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Set<int> _favorites = {};
   Set<int> _watchlist = {};
 
-  // Controllers for the horizontal movie rows
+  
   final ScrollController _popularController =
       ScrollController();
 
@@ -186,10 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ============================================================
-  // MOVE MOVIE ROW
-  // ============================================================
-
   void _moveMovieRow(
     ScrollController controller,
   ) {
@@ -204,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const moveDistance = 500.0;
 
     if (currentScroll >= maxScroll - 10) {
-      // If we reached the end, go back to the beginning.
+     
       controller.animateTo(
         0,
         duration:
@@ -212,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      // Move the row to show more movies.
+      
       final nextPosition =
           currentScroll + moveDistance;
 
