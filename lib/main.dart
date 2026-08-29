@@ -7,6 +7,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import 'firebase_options.dart';
+import 'controllers/auth_controller.dart';
+import 'controllers/movie_controller.dart';
+import 'controllers/favorite_controller.dart';
 import 'providers/movie_provider.dart';
 import 'screens/login_screen.dart';
 
@@ -17,21 +20,29 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfiWeb;
   }
 
-  await dotenv.load(
-    fileName: '.env',
-  );
+  await dotenv.load(fileName: '.env');
 
   await Firebase.initializeApp(
-    options:
-        DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(
     MultiProvider(
       providers: [
+        
+        ChangeNotifierProvider(create: (_) => MovieProvider()),
+        
+        
+        ChangeNotifierProvider(create: (_) => AuthController()),
         ChangeNotifierProvider(
-          create: (_) => MovieProvider(),
+          create: (context) {
+            final controller = MovieController();
+            final provider = context.read<MovieProvider>();
+            controller.init(provider);
+            return controller;
+          },
         ),
+        ChangeNotifierProvider(create: (_) => FavoriteController()),
       ],
       child: const MovieApp(),
     ),
@@ -48,8 +59,7 @@ class MovieApp extends StatelessWidget {
       title: 'Movie App',
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor:
-            const Color(0xFF070707),
+        scaffoldBackgroundColor: const Color(0xFF070707),
         fontFamily: 'Arial',
         useMaterial3: true,
         colorScheme: const ColorScheme.dark(

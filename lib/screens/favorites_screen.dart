@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
-import '../services/database_service.dart';
+import '../controllers/favorite_controller.dart';
 import '../widgets/movie_card.dart';
 import 'movie_details_screen.dart';
 
@@ -9,15 +10,10 @@ class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
 
   @override
-  State<FavoritesScreen> createState() =>
-      _FavoritesScreenState();
+  State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _FavoritesScreenState
-    extends State<FavoritesScreen> {
-  final DatabaseService _databaseService =
-      DatabaseService.instance;
-
+class _FavoritesScreenState extends State<FavoritesScreen> {
   List<Movie> _movies = [];
   bool _loading = true;
 
@@ -28,12 +24,10 @@ class _FavoritesScreenState
   }
 
   Future<void> _load() async {
-    setState(() {
-      _loading = true;
-    });
+    setState(() => _loading = true);
 
-    final movies =
-        await _databaseService.getFavorites();
+    final controller = context.read<FavoriteController>();
+    final movies = await controller.getFavoriteMovies();
 
     if (!mounted) return;
 
@@ -44,14 +38,12 @@ class _FavoritesScreenState
   }
 
   Future<void> _remove(Movie movie) async {
-    await _databaseService.removeFavorite(movie.id);
+    await context.read<FavoriteController>().removeFavorite(movie.id);
 
     if (!mounted) return;
 
     setState(() {
-      _movies.removeWhere(
-        (item) => item.id == movie.id,
-      );
+      _movies.removeWhere((item) => item.id == movie.id);
     });
 
     _message('Removed from Favorites');
@@ -84,27 +76,24 @@ class _FavoritesScreenState
       ),
       body: _loading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
+              child: CircularProgressIndicator(color: Colors.white),
             )
           : _movies.isEmpty
               ? _empty()
               : RefreshIndicator(
                   color: Colors.white,
-                  backgroundColor:
-                      const Color(0xFF1A1A1A),
+                  backgroundColor: const Color(0xFF1A1A1A),
                   onRefresh: _load,
                   child: GridView.builder(
                     padding: const EdgeInsets.all(24),
                     itemCount: _movies.length,
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 190,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 15,
-                      childAspectRatio: 0.64,
-                    ),
+                          maxCrossAxisExtent: 190,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 15,
+                          childAspectRatio: 0.64,
+                        ),
                     itemBuilder: (context, index) {
                       final movie = _movies[index];
 
@@ -116,8 +105,7 @@ class _FavoritesScreenState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) =>
-                                      MovieDetailsScreen(
+                                  builder: (_) => MovieDetailsScreen(
                                     movie: movie,
                                   ),
                                 ),
@@ -128,12 +116,9 @@ class _FavoritesScreenState
                             top: 8,
                             right: 8,
                             child: _ActionButton(
-                              icon:
-                                  Icons.favorite_rounded,
+                              icon: Icons.favorite_rounded,
                               color: Colors.redAccent,
-                              onTap: () {
-                                _remove(movie);
-                              },
+                              onTap: () => _remove(movie),
                             ),
                           ),
                         ],
@@ -195,11 +180,11 @@ class _ActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         customBorder: const CircleBorder(),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
+        child: const Padding(
+          padding: EdgeInsets.all(8),
           child: Icon(
-            icon,
-            color: color,
+            Icons.favorite_rounded,
+            color: Colors.redAccent,
             size: 19,
           ),
         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
-import '../services/database_service.dart';
+import '../controllers/favorite_controller.dart';
 import '../widgets/movie_card.dart';
 import 'movie_details_screen.dart';
 
@@ -9,15 +10,10 @@ class WantToWatchScreen extends StatefulWidget {
   const WantToWatchScreen({super.key});
 
   @override
-  State<WantToWatchScreen> createState() =>
-      _WantToWatchScreenState();
+  State<WantToWatchScreen> createState() => _WantToWatchScreenState();
 }
 
-class _WantToWatchScreenState
-    extends State<WantToWatchScreen> {
-  final DatabaseService _databaseService =
-      DatabaseService.instance;
-
+class _WantToWatchScreenState extends State<WantToWatchScreen> {
   List<Movie> _movies = [];
   bool _loading = true;
 
@@ -28,12 +24,10 @@ class _WantToWatchScreenState
   }
 
   Future<void> _load() async {
-    setState(() {
-      _loading = true;
-    });
+    setState(() => _loading = true);
 
-    final movies =
-        await _databaseService.getWantToWatch();
+    final controller = context.read<FavoriteController>();
+    final movies = await controller.getWatchlistMovies();
 
     if (!mounted) return;
 
@@ -44,23 +38,17 @@ class _WantToWatchScreenState
   }
 
   Future<void> _remove(Movie movie) async {
-    await _databaseService.removeWantToWatch(
-      movie.id,
-    );
+    await context.read<FavoriteController>().removeFromWatchlist(movie.id);
 
     if (!mounted) return;
 
     setState(() {
-      _movies.removeWhere(
-        (item) => item.id == movie.id,
-      );
+      _movies.removeWhere((item) => item.id == movie.id);
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text(
-          'Removed from My List',
-        ),
+        content: Text('Removed from My List'),
         behavior: SnackBarBehavior.floating,
         backgroundColor: Color(0xFF222222),
       ),
@@ -84,15 +72,12 @@ class _WantToWatchScreenState
       ),
       body: _loading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
+              child: CircularProgressIndicator(color: Colors.white),
             )
           : _movies.isEmpty
               ? const Center(
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.bookmark_border_rounded,
@@ -120,19 +105,18 @@ class _WantToWatchScreenState
                 )
               : RefreshIndicator(
                   color: Colors.white,
-                  backgroundColor:
-                      const Color(0xFF1A1A1A),
+                  backgroundColor: const Color(0xFF1A1A1A),
                   onRefresh: _load,
                   child: GridView.builder(
                     padding: const EdgeInsets.all(24),
                     itemCount: _movies.length,
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 190,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 15,
-                      childAspectRatio: 0.64,
-                    ),
+                          maxCrossAxisExtent: 190,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 15,
+                          childAspectRatio: 0.64,
+                        ),
                     itemBuilder: (context, index) {
                       final movie = _movies[index];
 
@@ -144,8 +128,7 @@ class _WantToWatchScreenState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) =>
-                                      MovieDetailsScreen(
+                                  builder: (_) => MovieDetailsScreen(
                                     movie: movie,
                                   ),
                                 ),
@@ -156,21 +139,13 @@ class _WantToWatchScreenState
                             top: 8,
                             right: 8,
                             child: Material(
-                              color:
-                                  Colors.black.withOpacity(
-                                0.78,
-                              ),
-                              shape:
-                                  const CircleBorder(),
+                              color: Colors.black.withOpacity(0.78),
+                              shape: const CircleBorder(),
                               child: InkWell(
-                                customBorder:
-                                    const CircleBorder(),
-                                onTap: () {
-                                  _remove(movie);
-                                },
+                                customBorder: const CircleBorder(),
+                                onTap: () => _remove(movie),
                                 child: const Padding(
-                                  padding:
-                                      EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(8),
                                   child: Icon(
                                     Icons.bookmark_rounded,
                                     color: Colors.amber,

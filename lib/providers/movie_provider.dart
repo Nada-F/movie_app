@@ -7,44 +7,32 @@ class MovieProvider extends ChangeNotifier {
   final TMDBService _tmdbService = TMDBService();
 
   List<Movie> _movies = [];
-
   List<Movie> _searchResults = [];
-
   bool _isLoading = false;
-
   String? _errorMessage;
-
   String _selectedFilter = 'Popular';
 
   List<Movie> get movies => _movies;
-
   List<Movie> get searchResults => _searchResults;
-
   bool get isLoading => _isLoading;
-
   String? get errorMessage => _errorMessage;
-
   String get selectedFilter => _selectedFilter;
 
   Future<void> loadMovies() async {
     _setLoading(true);
+    _errorMessage = null;
 
     try {
-      _errorMessage = null;
-
       switch (_selectedFilter) {
         case 'Now Playing':
           _movies = await _tmdbService.getNowPlayingMovies();
           break;
-
         case 'Top Rated':
           _movies = await _tmdbService.getTopRatedMovies();
           break;
-
         case 'Upcoming':
           _movies = await _tmdbService.getUpcomingMovies();
           break;
-
         case 'Popular':
         default:
           _movies = await _tmdbService.getPopularMovies();
@@ -58,8 +46,9 @@ class MovieProvider extends ChangeNotifier {
   }
 
   Future<void> changeFilter(String filter) async {
+    if (_selectedFilter == filter) return;
     _selectedFilter = filter;
-
+    notifyListeners();
     await loadMovies();
   }
 
@@ -71,10 +60,9 @@ class MovieProvider extends ChangeNotifier {
     }
 
     _setLoading(true);
+    _errorMessage = null;
 
     try {
-      _errorMessage = null;
-
       _searchResults = await _tmdbService.searchMovies(query);
     } catch (e) {
       _errorMessage = e.toString();
