@@ -44,3 +44,14 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+# Unwanted project folders
+.agents/
+ios/
+linux/
+macos/
+windows/
+test/
+skills-lock.json
+
+# Firebase local config
+android/app/google-services.json
