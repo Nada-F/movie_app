@@ -9,8 +9,7 @@ class TMDBService {
   static const String _baseUrl =
       'https://api.themoviedb.org/3';
 
-  // Number of pages to load for every movie category.
-  // TMDB usually returns around 20 movies per page.
+  
   static const int _pagesToLoad = 3;
 
   String get _apiKey {
@@ -23,9 +22,7 @@ class TMDBService {
     return key;
   }
 
-  // ============================================================
-  // GET MOVIES
-  // ============================================================
+ 
 
   Future<List<Movie>> _getMovies(
     String endpoint,
@@ -70,10 +67,7 @@ class TMDBService {
       allMovies.addAll(movies);
     }
 
-    // ==========================================================
-    // REMOVE DUPLICATES
-    // ==========================================================
-
+    
     final Map<int, Movie> uniqueMovies = {};
 
     for (final movie in allMovies) {
@@ -83,9 +77,7 @@ class TMDBService {
     return uniqueMovies.values.toList();
   }
 
-  // ============================================================
-  // POPULAR MOVIES
-  // ============================================================
+  
 
   Future<List<Movie>> getPopularMovies() {
     return _getMovies(
@@ -93,9 +85,7 @@ class TMDBService {
     );
   }
 
-  // ============================================================
-  // TRENDING MOVIES
-  // ============================================================
+  
 
   Future<List<Movie>> getTrendingMovies() {
     return _getMovies(
@@ -103,9 +93,7 @@ class TMDBService {
     );
   }
 
-  // ============================================================
-  // NOW PLAYING
-  // ============================================================
+  
 
   Future<List<Movie>> getNowPlayingMovies() {
     return _getMovies(
@@ -113,9 +101,7 @@ class TMDBService {
     );
   }
 
-  // ============================================================
-  // TOP RATED
-  // ============================================================
+  
 
   Future<List<Movie>> getTopRatedMovies() {
     return _getMovies(
@@ -123,9 +109,7 @@ class TMDBService {
     );
   }
 
-  // ============================================================
-  // UPCOMING
-  // ============================================================
+  
 
   Future<List<Movie>> getUpcomingMovies() {
     return _getMovies(
@@ -133,9 +117,7 @@ class TMDBService {
     );
   }
 
-  // ============================================================
-  // SEARCH
-  // ============================================================
+  
 
   Future<List<Movie>> searchMovies(
     String query,
@@ -176,9 +158,7 @@ class TMDBService {
         .toList();
   }
 
-  // ============================================================
-  // MOVIE DETAILS
-  // ============================================================
+  
 
   Future<Map<String, dynamic>> getMovieDetails(
     int movieId,
