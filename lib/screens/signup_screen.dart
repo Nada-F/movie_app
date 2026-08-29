@@ -50,7 +50,6 @@ class _SignupScreenState extends State<SignupScreen> {
         _passwordController.text.trim(),
       );
 
-      // Save user's name in Firebase Authentication
       if (user != null) {
         await user.updateDisplayName(
           _nameController.text.trim(),
@@ -59,7 +58,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
       if (!mounted) return;
 
-      // Go to Home Screen
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -107,8 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
           message =
               e.message ?? 'Sign up failed.';
 
-          // يظهر كود الخطأ الحقيقي لو Firebase رجّع
-          // خطأ مختلف
+          
           message = '$message (${e.code})';
       }
 
@@ -128,9 +125,6 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  // =========================
-  // SHOW MESSAGE
-  // =========================
   void _message(String text) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -150,9 +144,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  // =========================
-  // INPUT DECORATION
-  // =========================
   InputDecoration _input(
     String hint,
     IconData icon, {
@@ -219,24 +210,18 @@ class _SignupScreenState extends State<SignupScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // =========================
-          // BACKGROUND
-          // =========================
+          
           Image.asset(
             'assets/images/sign_up_background.jpeg',
             fit: BoxFit.cover,
           ),
 
-          // =========================
-          // DARK OVERLAY
-          // =========================
+          
           Container(
             color: Colors.black.withOpacity(0.60),
           ),
 
-          // =========================
-          // CONTENT
-          // =========================
+          
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -258,16 +243,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           CrossAxisAlignment.stretch,
 
                       children: [
-                        // =========================
-                        // LOGO
-                        // =========================
+                       
                         _logo(),
 
                         const SizedBox(height: 25),
 
-                        // =========================
-                        // TITLE
-                        // =========================
+                       
                         const Text(
                           'CREATE YOUR ACCOUNT',
                           textAlign: TextAlign.center,
@@ -281,9 +262,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 8),
 
-                        // =========================
-                        // SUBTITLE
-                        // =========================
+                       
                         const Text(
                           'Your next favorite movie is waiting.',
                           textAlign: TextAlign.center,
@@ -295,9 +274,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 30),
 
-                        // =========================
-                        // NAME
-                        // =========================
+                        
                         TextFormField(
                           controller: _nameController,
 
@@ -326,9 +303,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 13),
 
-                        // =========================
-                        // EMAIL
-                        // =========================
+                        
                         TextFormField(
                           controller: _emailController,
 
@@ -364,9 +339,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 13),
 
-                        // =========================
-                        // PASSWORD
-                        // =========================
+                        
                         TextFormField(
                           controller:
                               _passwordController,
@@ -421,9 +394,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 13),
 
-                        // =========================
-                        // CONFIRM PASSWORD
-                        // =========================
+                        
                         TextFormField(
                           controller:
                               _confirmController,
@@ -481,9 +452,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 22),
 
-                        // =========================
-                        // CREATE ACCOUNT BUTTON
-                        // =========================
+                        
                         SizedBox(
                           height: 54,
 
@@ -540,9 +509,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 22),
 
-                        // =========================
-                        // LOGIN
-                        // =========================
+                        
                         Row(
                           mainAxisAlignment:
                               MainAxisAlignment.center,
@@ -596,16 +563,12 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  // =========================
-  // MOVIE APP BRAND
-  // =========================
+ 
   Widget _logo() {
     return Center(
       child: Column(
         children: [
-          // =========================
-          // MOVIE IMAGE
-          // =========================
+          
           ClipRRect(
             borderRadius:
                 BorderRadius.circular(14),
@@ -622,9 +585,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
           const SizedBox(height: 18),
 
-          // =========================
-          // APP NAME
-          // =========================
+         
           RichText(
             textAlign: TextAlign.center,
 
@@ -657,9 +618,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
           const SizedBox(height: 7),
 
-          // =========================
-          // TAGLINE
-          // =========================
+          
           const Text(
             'DISCOVER • WATCH • ENJOY',
 
