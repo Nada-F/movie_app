@@ -34,9 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
 
-  // =========================
-  // SIGN UP
-  // =========================
+ 
   Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) {
       return;
