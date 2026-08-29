@@ -34,7 +34,7 @@ Main packages and technologies used:
 
 ## Project Structure
 
-```text
+
 movie_app/
 │
 ├── lib/
@@ -80,7 +80,7 @@ movie_app/
 ├── pubspec.yaml
 ├── pubspec.lock
 └── README.md
-```
+
 
 
 ### Folder Description
