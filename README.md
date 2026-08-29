@@ -2,7 +2,7 @@
 
 Movie App is a Flutter application for browsing and searching for movies. Users can create an account, explore different movie categories, view movie details, and save movies to their personal lists.
 
-The app uses TMDB to get movie information, Firebase Authentication for user accounts, and SQLite for storing saved movies locally.
+The app uses **TMDB** to get movie information, **Firebase Authentication** for user accounts, and **SQLite** for storing saved movies locally.
 
 ## Features
 
@@ -18,7 +18,7 @@ The app uses TMDB to get movie information, Firebase Authentication for user acc
 
 ## Technologies Used
 
-The project was developed using Flutter and Dart.
+The project was developed using **Flutter** and **Dart**.
 
 Main packages and technologies used:
 
@@ -72,10 +72,17 @@ movie_app/
 │       ├── movie_app_banner.png
 │       └── sign_up_background.jpeg
 │
-├── .env
+├── android/
+├── web/
+│
+├── .env.example
+├── .gitignore
 ├── pubspec.yaml
+├── pubspec.lock
 └── README.md
 ```
+
+### Folder Description
 
 * `models` - Contains the movie data model.
 * `providers` - Contains the state management logic.
@@ -86,13 +93,15 @@ movie_app/
 
 ## Application Flow
 
-The application starts with the Login screen. New users can open the Sign Up screen and create an account using their name, email, and password.
+The application starts with the Login screen for unauthenticated users. New users can open the Sign Up screen and create an account using their name, email, and password.
 
 After a successful registration or login, the user is taken to the Home screen. From there, users can browse movies by category or search for a specific movie.
 
 Selecting a movie opens the Movie Details screen. The user can view more information about the movie and add or remove it from Favorites, My List, or Continue Watching.
 
-Saved movies are stored locally using SQLite. The drawer in the Home screen provides access to Favorites, My List, Continue Watching, and the Sign Out option.
+Saved movies are stored locally using SQLite.
+
+The drawer in the Home screen provides access to Favorites, My List, Continue Watching, and the Sign Out option.
 
 ## Authentication
 
@@ -119,11 +128,17 @@ For the main movie categories, the application requests three pages from TMDB an
 
 The search feature waits briefly after the user stops typing before sending the request. This helps reduce unnecessary API calls while the user is typing.
 
-The Movie Details screen displays additional information such as the movie rating, release date, runtime, overview, and cast.
+The Movie Details screen displays additional information such as:
+
+* Movie rating
+* Release date
+* Runtime
+* Overview
+* Cast
 
 ## State Management
 
-The project uses Provider for movie-related state management.
+The project uses **Provider** for movie-related state management.
 
 `MovieProvider` handles:
 
@@ -155,7 +170,12 @@ Each table stores information about the saved movie, including:
 * Rating
 * Release date
 
-`DatabaseService` handles database operations such as adding, removing, checking, and loading saved movies.
+`DatabaseService` handles database operations such as:
+
+* Adding movies
+* Removing movies
+* Checking saved movies
+* Loading saved movies
 
 ## UI and Navigation
 
@@ -163,7 +183,13 @@ The application uses a dark theme with Material 3.
 
 The Home screen contains movie cards and horizontal movie sections. Saved movie screens and search results use grid layouts.
 
-The application also includes loading indicators, error messages, and empty states where needed.
+The application also includes:
+
+* Loading indicators
+* Error messages
+* Empty states
+* Try Again actions
+* Pull-to-refresh functionality
 
 The main navigation starts from the Login screen. Users can either create a new account through Sign Up or log in with an existing account.
 
@@ -185,7 +211,7 @@ Run:
 flutter pub get
 ```
 
-### 3. Add the TMDB API Key
+### 3. Configure TMDB API Key
 
 Create a `.env` file in the project root and add your TMDB API key:
 
@@ -195,11 +221,19 @@ TMDB_API_KEY=your_tmdb_api_key
 
 The application reads the API key from the environment variable instead of placing it directly in the source code.
 
+**Important:** The `.env` file should not be committed to GitHub. Only `.env.example` should be included in the repository.
+
 ### 4. Configure Firebase
 
-Connect the project to Firebase and make sure Email/Password authentication is enabled in the Firebase Authentication settings.
+Connect the project to Firebase and make sure **Email/Password Authentication** is enabled in the Firebase Authentication settings.
 
-The Firebase configuration is provided through `firebase_options.dart`.
+The Firebase configuration is provided through:
+
+```text
+lib/firebase_options.dart
+```
+
+For Android, the Firebase configuration also requires the appropriate `google-services.json` file in the Android project.
 
 ### 5. Run the Application
 
