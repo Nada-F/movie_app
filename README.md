@@ -29,7 +29,7 @@ The app uses **TMDB** to get movie information, **Firebase Authentication** for 
 - **flutter_dotenv** - Environment variables
 
 ## Project Structure
-
+```
 movie_app/
 │
 ├── lib/
@@ -81,6 +81,7 @@ movie_app/
 ├── .gitignore
 ├── pubspec.yaml
 └── README.md
+   ```
 
 ### Folder Description
 

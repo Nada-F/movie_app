@@ -43,6 +43,8 @@ Screen rebuilds
 ---
 
 ## Project Structure
+
+```
 lib/
 ├── main.dart
 ├── firebase_options.dart
@@ -76,7 +78,7 @@ lib/
 │
 └── widgets/
     └── movie_card.dart
-
+```
 ---
 
 ## API Integration
