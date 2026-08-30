@@ -6,35 +6,30 @@ The app uses **TMDB** to get movie information, **Firebase Authentication** for 
 
 ## Features
 
-* User registration and login with Firebase Authentication.
-* Browse movies from Popular, Now Playing, Top Rated, and Upcoming categories.
-* Search for movies with a short delay to reduce unnecessary API requests.
-* View movie details including rating, release date, runtime, overview, and cast.
-* Add and remove movies from Favorites, My List, and Continue Watching.
-* Store saved movies locally using SQLite.
-* Loading and error states with a Try Again option.
-* Pull-to-refresh on saved movie screens.
-* Dark user interface.
+- User registration and login with Firebase Authentication
+- Browse movies from Popular, Now Playing, Top Rated, and Upcoming categories
+- Search for movies with a short delay to reduce unnecessary API requests
+- View movie details including rating, release date, runtime, overview, and cast
+- Add and remove movies from Favorites, My List, and Continue Watching
+- Store saved movies locally using SQLite
+- Loading and error states with a Try Again option
+- Pull-to-refresh on saved movie screens
+- Dark user interface
 
 ## Technologies Used
 
-The project was developed using **Flutter** and **Dart**.
-
-Main packages and technologies used:
-
-* **Flutter** - UI framework.
-* **Dart** - Programming language.
-* **Firebase Core** - Firebase initialization.
-* **Firebase Authentication** - Registration, login, and logout.
-* **TMDB API** - Movie data.
-* **HTTP** - API requests.
-* **Provider** - State management.
-* **SQLite** - Local storage.
-* **flutter_dotenv** - Environment variables.
+- **Flutter** - UI framework
+- **Dart** - Programming language
+- **Firebase Core** - Firebase initialization
+- **Firebase Authentication** - Registration, login, and logout
+- **TMDB API** - Movie data
+- **HTTP** - API requests
+- **Provider** - State management
+- **SQLite** - Local storage
+- **flutter_dotenv** - Environment variables
 
 ## Project Structure
 
-```text
 movie_app/
 │
 ├── lib/
@@ -84,19 +79,17 @@ movie_app/
 ├── .env.example
 ├── .gitignore
 ├── pubspec.yaml
-├── pubspec.lock
 └── README.md
-```
 
 ### Folder Description
 
-- `models` - Contains the movie data model.
-- `controllers` - Handles application logic and coordinates between providers and screens.
-- `providers` - Contains the state management logic.
-- `services` - Handles API requests, authentication, and database operations.
-- `screens` - Contains the application screens.
-- `widgets` - Contains reusable UI components.
-- `assets` - Contains the images used in the application.
+- `models` - Contains the movie data model
+- `controllers` - Handles application logic and coordinates between providers and screens
+- `providers` - Contains the state management logic
+- `services` - Handles API requests, authentication, and database operations
+- `screens` - Contains the application screens
+- `widgets` - Contains reusable UI components
+- `assets` - Contains the images used in the application
 
 ## Application Flow
 
@@ -110,182 +103,40 @@ Saved movies are stored locally using SQLite.
 
 The drawer in the Home screen provides access to Favorites, My List, Continue Watching, and the Sign Out option.
 
-## Authentication
-
-Firebase Authentication is used to manage user accounts. Users can create a new account, log in, and log out.
-
-During registration, the user's name is saved as the Firebase display name.
-
-The authentication logic is handled by `AuthService`, keeping Firebase-related code separate from the UI screens.
-
-`AuthController` provides a controller layer for authentication operations such as login, signup, and logout.
-
-The application also handles common authentication errors such as invalid email, weak password, and an already registered email.
-
-## Movie Data
-
-Movie data is loaded from the TMDB API.
-
-The Home screen provides four main categories:
-
-- Popular
-- Now Playing
-- Top Rated
-- Upcoming
-
-For the main movie categories, the application requests three pages from TMDB and removes duplicate movies using their IDs.
-
-The search feature waits briefly after the user stops typing before sending the request. This helps reduce unnecessary API calls while the user is typing.
-
-The Movie Details screen displays additional information such as:
-
-- Movie rating
-- Release date
-- Runtime
-- Overview
-- Cast
-
-## State Management
-
-The project uses **Provider** for state management.
-
-`MovieProvider` handles:
-
-- Movie loading
-- Category selection
-- Search results
-- Loading states
-- Error messages
-
-`MovieController` wraps `MovieProvider` and coordinates movie-related operations between the UI and state management layer.
-
-`FavoriteController` manages saved movies including:
-
-- Favorites
-- My List
-- Continue Watching
-- Adding movies
-- Removing movies
-- Checking whether a movie is saved
-- Loading saved movies
-
-`AuthController` handles authentication logic including:
-
-- Login
-- Sign Up
-- Logout
-
-## Local Storage
-
-SQLite is used to store movies saved by the user.
-
-The application uses three tables:
-
-- `favorites`
-- `continue_watching`
-- `want_to_watch`
-
-Each table stores information about the saved movie, including:
-
-- Movie ID
-- Title
-- Overview
-- Poster path
-- Backdrop path
-- Rating
-- Release date
-
-`DatabaseService` handles database operations such as:
-
-- Adding movies
-- Removing movies
-- Checking saved movies
-- Loading saved movies
-
-The controllers use `DatabaseService` to keep database operations separate from the UI screens.
-
-## UI and Navigation
-
-The application uses a dark theme with Material 3.
-
-The Home screen contains movie cards and horizontal movie sections. Saved movie screens and search results use grid layouts.
-
-The application also includes:
-
-- Loading indicators
-- Error messages
-- Empty states
-- Try Again actions
-- Pull-to-refresh functionality
-
-The main navigation starts from the Login screen. Users can either create a new account through Sign Up or log in with an existing account.
-
-After authentication, the user can access the Home screen, open movie details, and manage Favorites, My List, and Continue Watching.
-
-The Home screen drawer provides quick access to the main sections and the Sign Out option.
-
 ## Setup
 
 ### 1. Install Flutter
 
-Make sure Flutter is installed and open the project in your preferred IDE, such as Android Studio or Visual Studio Code.
+Make sure Flutter is installed and open the project in your preferred IDE.
 
 ### 2. Install Dependencies
 
-Run:
-
-```bash
 flutter pub get
-```
 
 ### 3. Configure TMDB API Key
 
-Create a `.env` file in the project root and add your TMDB API key:
+Create a `.env` file in the project root:
 
-```env
 TMDB_API_KEY=your_tmdb_api_key
-```
-
-The application reads the API key from the environment variable instead of placing it directly in the source code.
-
-**Important:** The `.env` file should not be committed to GitHub. Only `.env.example` should be included in the repository.
 
 ### 4. Configure Firebase
 
-Connect the project to Firebase and make sure **Email/Password Authentication** is enabled in the Firebase Authentication settings.
-
-The Firebase configuration is provided through:
-
-```text
-lib/firebase_options.dart
-```
-
-For Android, the Firebase configuration also requires the appropriate `google-services.json` file in the Android project.
+Connect the project to Firebase and enable Email/Password Authentication.
 
 ### 5. Run the Application
 
-Run:
-
-```bash
 flutter run
-```
 
-## Project Goal
+## Documentation
 
-The goal of this project is to build a complete movie application using Flutter while practicing different parts of application development.
+For detailed documentation about the project architecture, API integration, database schema, authentication flow, and state management, please refer to:
 
-The project combines:
+[DOCUMENTATION.md](https://./DOCUMENTATION.md)
 
-- User authentication
-- API integration
-- State management
-- Controller architecture
-- Local database storage
-- Movie browsing and search
-- Flutter UI development
+---
 
 ## Conclusion
 
 Movie App provides a simple way to browse movies, search for specific titles, view movie information, and save movies to personal lists.
 
-The project also demonstrates how Flutter can be integrated with Firebase Authentication, the TMDB API, Provider, controllers, and SQLite in one application.
+The project demonstrates how Flutter can be integrated with Firebase Authentication, the TMDB API, Provider, controllers, and SQLite in one application.

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import '../models/movie.dart';
 import '../services/tmdb_service.dart';
 
@@ -40,6 +39,9 @@ class MovieProvider extends ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
+      if (_errorMessage != null && _errorMessage!.contains('No internet connection')) {
+        _errorMessage = 'No internet connection. Please check your network.';
+      }
     }
 
     _setLoading(false);
@@ -66,6 +68,9 @@ class MovieProvider extends ChangeNotifier {
       _searchResults = await _tmdbService.searchMovies(query);
     } catch (e) {
       _errorMessage = e.toString();
+      if (_errorMessage != null && _errorMessage!.contains('No internet connection')) {
+        _errorMessage = 'No internet connection. Please check your network.';
+      }
     }
 
     _setLoading(false);

@@ -11,8 +11,7 @@ import 'controllers/auth_controller.dart';
 import 'controllers/movie_controller.dart';
 import 'controllers/favorite_controller.dart';
 import 'providers/movie_provider.dart';
-import 'screens/login_screen.dart';
-
+import 'screens/splash_screen.dart'; 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,10 +28,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        
         ChangeNotifierProvider(create: (_) => MovieProvider()),
-        
-        
         ChangeNotifierProvider(create: (_) => AuthController()),
         ChangeNotifierProvider(
           create: (context) {
@@ -66,7 +62,7 @@ class MovieApp extends StatelessWidget {
           surface: Color(0xFF070707),
         ),
       ),
-      home: const LoginScreen(),
+      home: const SplashScreen(), 
     );
   }
 }
