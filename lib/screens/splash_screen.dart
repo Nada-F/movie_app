@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final auth = context.read<AuthController>();
 
-   
     if (auth.isLoggedIn) {
       Navigator.pushReplacement(
         context,
@@ -47,7 +46,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
@@ -58,7 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            
             RichText(
               textAlign: TextAlign.center,
               text: const TextSpan(
@@ -95,7 +92,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(height: 50),
-            
             const CircularProgressIndicator(
               color: Colors.white,
               strokeWidth: 2,

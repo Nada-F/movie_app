@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://api.themoviedb.org/3';
@@ -14,17 +15,28 @@ class ApiService {
     return key;
   }
 
+  Future<bool> _hasInternet() async {
+    try {
+      if (kIsWeb) {
+        final response = await http.get(
+          Uri.parse('$_baseUrl/configuration?api_key=$_apiKey'),
+        );
+        return response.statusCode == 200;
+      } else {
+        final result = await InternetAddress.lookup('google.com');
+        return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+      }
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<Map<String, dynamic>> get(
     String endpoint, {
     Map<String, String>? queryParams,
   }) async {
-    try {
-      
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isEmpty || result[0].rawAddress.isEmpty) {
-        throw Exception('No internet connection. Please check your network.');
-      }
-    } on SocketException catch (_) {
+    final hasInternet = await _hasInternet();
+    if (!hasInternet) {
       throw Exception('No internet connection. Please check your network.');
     }
 
@@ -56,12 +68,8 @@ class ApiService {
     Map<String, dynamic>? body,
     Map<String, String>? queryParams,
   }) async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isEmpty || result[0].rawAddress.isEmpty) {
-        throw Exception('No internet connection. Please check your network.');
-      }
-    } on SocketException catch (_) {
+    final hasInternet = await _hasInternet();
+    if (!hasInternet) {
       throw Exception('No internet connection. Please check your network.');
     }
 

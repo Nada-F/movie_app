@@ -11,7 +11,8 @@ import 'controllers/auth_controller.dart';
 import 'controllers/movie_controller.dart';
 import 'controllers/favorite_controller.dart';
 import 'providers/movie_provider.dart';
-import 'screens/splash_screen.dart'; 
+import 'screens/splash_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -62,7 +63,7 @@ class MovieApp extends StatelessWidget {
           surface: Color(0xFF070707),
         ),
       ),
-      home: const SplashScreen(), 
+      home: const SplashScreen(),
     );
   }
 }
