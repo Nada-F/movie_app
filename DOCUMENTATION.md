@@ -49,34 +49,34 @@ lib/
 ├── firebase_options.dart
 │
 ├── models/
-│   └── movie.dart
+│ └── movie.dart
 │
 ├── controllers/
-│   ├── auth_controller.dart
-│   ├── movie_controller.dart
-│   └── favorite_controller.dart
+│ ├── auth_controller.dart
+│ ├── movie_controller.dart
+│ └── favorite_controller.dart
 │
 ├── providers/
-│   └── movie_provider.dart
+│ └── movie_provider.dart
 │
 ├── services/
-│   ├── api_service.dart
-│   ├── auth_service.dart
-│   ├── tmdb_service.dart
-│   └── database_service.dart
+│ ├── api_service.dart
+│ ├── auth_service.dart
+│ ├── tmdb_service.dart
+│ └── database_service.dart
 │
 ├── screens/
-│   ├── splash_screen.dart
-│   ├── login_screen.dart
-│   ├── signup_screen.dart
-│   ├── home_screen.dart
-│   ├── movie_details_screen.dart
-│   ├── favorites_screen.dart
-│   ├── continue_watching_screen.dart
-│   └── want_to_watch_screen.dart
+│ ├── splash_screen.dart
+│ ├── login_screen.dart
+│ ├── signup_screen.dart
+│ ├── home_screen.dart
+│ ├── movie_details_screen.dart
+│ ├── favorites_screen.dart
+│ ├── continue_watching_screen.dart
+│ └── want_to_watch_screen.dart
 │
 └── widgets/
-    └── movie_card.dart
+└── movie_card.dart
 
 ---
 
