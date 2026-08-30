@@ -1,7 +1,3 @@
-Movie App - Documentation
-
----
-
 ## Project Overview
 
 Movie App is a Flutter application for browsing and searching movies. Users can create accounts, explore different movie categories, view movie details, and save movies to personal lists.
