@@ -27,24 +27,24 @@ The project follows the **MVC pattern** with Provider for state management.
 ### Data Flow
 
 User interacts with Screen
-        ↓
+↓
 Screen calls Controller
-        ↓
+↓
 Controller calls Service
-        ↓
+↓
 Service fetches or stores data
-        ↓
+↓
 Controller updates Provider
-        ↓
+↓
 Provider notifies the UI
-        ↓
+↓
 Screen rebuilds
 
 ---
 
 ## Project Structure
-
 ```
+
 lib/
 ├── main.dart
 ├── firebase_options.dart
@@ -74,11 +74,13 @@ lib/
 │   ├── movie_details_screen.dart
 │   ├── favorites_screen.dart
 │   ├── continue_watching_screen.dart
-│   └── want_to_watch_screen.dart
+│   ├── want_to_watch_screen.dart
+│   └── profile_screen.dart
 │
 └── widgets/
     └── movie_card.dart
 ```
+
 ---
 
 ## API Integration
@@ -89,14 +91,14 @@ The application fetches movie data from The Movie Database (TMDB) API.
 
 ### Endpoints Used
 
-| **EndpointPurpose**  |                                   |
-| -------------------- | --------------------------------- |
-| `/movie/popular`     | Retrieve popular movies           |
+| Endpoint | Purpose |
+|----------|---------|
+| `/movie/popular` | Retrieve popular movies |
 | `/movie/now_playing` | Retrieve currently playing movies |
-| `/movie/top_rated`   | Retrieve top-rated movies         |
-| `/movie/upcoming`    | Retrieve upcoming movies          |
-| `/search/movie`      | Search for movies                 |
-| `/movie/{id}`        | Retrieve movie details with cast  |
+| `/movie/top_rated` | Retrieve top-rated movies |
+| `/movie/upcoming` | Retrieve upcoming movies |
+| `/search/movie` | Search for movies |
+| `/movie/{id}` | Retrieve movie details with cast |
 
 ### Implementation
 
@@ -109,7 +111,7 @@ The application fetches movie data from The Movie Database (TMDB) API.
 - Missing API key → Exception
 - Failed requests → Error message with status code
 - Empty results → Empty list
-- Network errors → User-friendly message
+- No internet connection → User-friendly message with Try Again option
 
 ---
 
@@ -123,21 +125,21 @@ Local storage is handled using SQFLite.
 
 All tables share the same structure:
 
-| **ColumnTypeDescription** |                     |                     |
-| ------------------------- | ------------------- | ------------------- |
-| id                        | INTEGER PRIMARY KEY | Movie ID from TMDB  |
-| title                     | TEXT NOT NULL       | Movie title         |
-| overview                  | TEXT                | Movie overview      |
-| posterPath                | TEXT                | Poster image path   |
-| backdropPath              | TEXT                | Backdrop image path |
-| rating                    | REAL                | Movie rating        |
-| releaseDate               | TEXT                | Release date        |
+| Column | Type | Description |
+|--------|------|-------------|
+| id | INTEGER PRIMARY KEY | Movie ID from TMDB |
+| title | TEXT NOT NULL | Movie title |
+| overview | TEXT | Movie overview |
+| posterPath | TEXT | Poster image path |
+| backdropPath | TEXT | Backdrop image path |
+| rating | REAL | Movie rating |
+| releaseDate | TEXT | Release date |
 
 ### Tables Used
 
 - **favorites** → Saved favorite movies
-- **continue\_watching** → Movies the user is currently watching
-- **want\_to\_watch** → Movies the user wants to watch later
+- **continue_watching** → Movies the user is currently watching
+- **want_to_watch** → Movies the user wants to watch later
 
 ### Operations
 
@@ -153,16 +155,13 @@ User accounts are managed using Firebase Authentication.
 
 ### Features
 
-**Sign Up**
-
+**Sign Up**  
 Users can create an account using email and password. The user's name is saved as the Firebase display name.
 
-**Login**
-
+**Login**  
 Users can sign in with their email and password.
 
-**Logout**
-
+**Logout**  
 Users can sign out from the drawer.
 
 ### Error Handling
@@ -192,17 +191,17 @@ Provider is used for reactive state management.
 
 ### Controllers
 
-| **ControllerResponsibility** |                                                       |
-| ---------------------------- | ----------------------------------------------------- |
-| AuthController               | Authentication logic, loading state, error messages   |
-| MovieController              | Movie operations, wraps MovieProvider, notifies UI    |
-| FavoriteController           | Saved movies, favorites, watchlist, continue watching |
+| Controller | Responsibility |
+|------------|----------------|
+| AuthController | Authentication logic, loading state, error messages |
+| MovieController | Movie operations, wraps MovieProvider, notifies UI |
+| FavoriteController | Saved movies, favorites, watchlist, continue watching |
 
 ### Provider
 
-| **ProviderResponsibility** |                                                               |
-| -------------------------- | ------------------------------------------------------------- |
-| MovieProvider              | Movie data, category selection, search, loading state, errors |
+| Provider | Responsibility |
+|----------|----------------|
+| MovieProvider | Movie data, category selection, search, loading state, errors |
 
 ### Usage
 
@@ -214,16 +213,17 @@ Provider is used for reactive state management.
 
 ## Screens
 
-| **ScreenDescription**    |                                                    |
-| ------------------------ | -------------------------------------------------- |
-| Splash Screen            | Displays app logo and checks authentication status |
-| Login Screen             | User login with email and password                 |
-| Sign Up Screen           | New user registration                              |
-| Home Screen              | Browse movies by category, search functionality    |
-| Movie Details Screen     | Movie information, cast, and list management       |
-| Favorites Screen         | Display saved favorite movies                      |
-| Continue Watching Screen | Display movies the user is currently watching      |
-| My List Screen           | Display movies the user wants to watch later       |
+| Screen | Description |
+|--------|-------------|
+| Splash Screen | Displays app logo and checks authentication status |
+| Login Screen | User login with email and password |
+| Sign Up Screen | New user registration |
+| Home Screen | Browse movies by category, search functionality |
+| Movie Details Screen | Movie information, cast, and list management |
+| Favorites Screen | Display saved favorite movies |
+| Continue Watching Screen | Display movies the user is currently watching |
+| My List Screen | Display movies the user wants to watch later |
+| Profile Screen | Display user information and saved movie statistics |
 
 ---
 
@@ -236,8 +236,10 @@ Provider is used for reactive state management.
 - Add and remove movies from Favorites
 - Add and remove movies from Continue Watching
 - Add and remove movies from My List
+- View profile with user information and movie statistics
 - Save movies locally using SQFLite
 - Loading indicators and error states
+- No internet connection handling
 - Pull-to-refresh on saved movie screens
 - Dark theme UI
 
