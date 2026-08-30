@@ -6,7 +6,11 @@ import '../services/tmdb_service.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
-  const MovieDetailsScreen({super.key, required this.movie});
+
+  const MovieDetailsScreen({
+    super.key,
+    required this.movie,
+  });
 
   @override
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
@@ -19,8 +23,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   bool _isFavorite = false;
   bool _isWantToWatch = false;
   bool _isContinueWatching = false;
+
   bool _loading = true;
   bool _detailsLoading = true;
+
   Map<String, dynamic>? _details;
 
   @override
@@ -39,7 +45,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Future<void> _loadStatus() async {
     final controller = context.read<FavoriteController>();
     final status = await controller.getMovieStatus(widget.movie.id);
+
     if (!mounted) return;
+
     setState(() {
       _isFavorite = status['isFavorite'] ?? false;
       _isWantToWatch = status['isInWatchlist'] ?? false;
@@ -51,47 +59,79 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Future<void> _loadDetails() async {
     try {
       final details = await _tmdbService.getMovieDetails(widget.movie.id);
+
       if (!mounted) return;
+
       setState(() {
         _details = details;
         _detailsLoading = false;
       });
-    } catch (_) {
+    } catch (e) {
       if (!mounted) return;
+
       setState(() {
         _detailsLoading = false;
       });
+
+      String errorMessage = e.toString();
+      if (errorMessage.contains('No internet connection')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('No internet connection. Please check your network.'),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: const Color(0xFF222222),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 
   Future<void> _toggleFavorite() async {
     final controller = context.read<FavoriteController>();
     await controller.toggleFavorite(widget.movie);
+
     if (!mounted) return;
+
     setState(() {
       _isFavorite = !_isFavorite;
     });
-    _message(_isFavorite ? 'Added to Favorites' : 'Removed from Favorites');
+
+    _message(
+      _isFavorite ? 'Added to Favorites' : 'Removed from Favorites',
+    );
   }
 
   Future<void> _toggleWatchlist() async {
     final controller = context.read<FavoriteController>();
     await controller.toggleWatchlist(widget.movie);
+
     if (!mounted) return;
+
     setState(() {
       _isWantToWatch = !_isWantToWatch;
     });
-    _message(_isWantToWatch ? 'Added to My List' : 'Removed from My List');
+
+    _message(
+      _isWantToWatch ? 'Added to My List' : 'Removed from My List',
+    );
   }
 
   Future<void> _toggleContinueWatching() async {
     final controller = context.read<FavoriteController>();
     await controller.toggleContinueWatching(widget.movie);
+
     if (!mounted) return;
+
     setState(() {
       _isContinueWatching = !_isContinueWatching;
     });
-    _message(_isContinueWatching ? 'Added to Continue Watching' : 'Removed from Continue Watching');
+
+    _message(
+      _isContinueWatching
+          ? 'Added to Continue Watching'
+          : 'Removed from Continue Watching',
+    );
   }
 
   void _message(String message) {
@@ -101,7 +141,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         behavior: SnackBarBehavior.floating,
         backgroundColor: const Color(0xFF242424),
         margin: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }
@@ -123,7 +165,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       return const Scaffold(
         backgroundColor: Color(0xFF070707),
         body: Center(
-          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 2,
+          ),
         ),
       );
     }
@@ -144,7 +189,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             actions: [
               _circleButton(
-                _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                _isFavorite
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
                 _toggleFavorite,
                 iconColor: _isFavorite ? Colors.redAccent : Colors.white,
               ),
@@ -219,7 +266,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               ),
                             Row(
                               children: [
-                                const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
+                                const Icon(
+                                  Icons.star_rounded,
+                                  color: Colors.amber,
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 5),
                                 Text(
                                   movie.rating.toStringAsFixed(1),
@@ -252,10 +303,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     child: ElevatedButton.icon(
                       onPressed: _toggleContinueWatching,
                       icon: Icon(
-                        _isContinueWatching ? Icons.check_rounded : Icons.play_arrow_rounded,
+                        _isContinueWatching
+                            ? Icons.check_rounded
+                            : Icons.play_arrow_rounded,
                       ),
                       label: Text(
-                        _isContinueWatching ? 'In Continue Watching' : 'Start Watching',
+                        _isContinueWatching
+                            ? 'In Continue Watching'
+                            : 'Start Watching',
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -271,7 +326,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     children: [
                       Expanded(
                         child: _ActionButton(
-                          icon: _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                          icon: _isFavorite
+                              ? Icons.favorite_rounded
+                              : Icons.favorite_border_rounded,
                           label: 'Favorite',
                           active: _isFavorite,
                           onTap: _toggleFavorite,
@@ -280,7 +337,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: _ActionButton(
-                          icon: _isWantToWatch ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+                          icon: _isWantToWatch
+                              ? Icons.bookmark_rounded
+                              : Icons.bookmark_border_rounded,
                           label: 'My List',
                           active: _isWantToWatch,
                           onTap: _toggleWatchlist,
@@ -299,7 +358,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    movie.overview.isNotEmpty ? movie.overview : 'No description available.',
+                    movie.overview.isNotEmpty
+                        ? movie.overview
+                        : 'No description available.',
                     style: const TextStyle(
                       color: Color(0x99FFFFFF),
                       fontSize: 14,
@@ -324,12 +385,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 2,
+          ),
         ),
       );
     }
 
     final details = _details;
+
     if (details == null) {
       return _detailsPanel(widget.movie);
     }
@@ -344,6 +409,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         ?.take(3)
         .map((e) => e['name'].toString())
         .join(', ');
+
     final genres = (details['genres'] as List?)
         ?.map((e) => e['name'].toString())
         .join(' • ');
@@ -359,27 +425,59 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       child: Column(
         children: [
           if (genres != null && genres.isNotEmpty) ...[
-            _detailRow(Icons.category_rounded, 'Genre', genres),
+            _detailRow(
+              Icons.category_rounded,
+              'Genre',
+              genres,
+            ),
             _divider(),
           ],
-          _detailRow(Icons.calendar_today_rounded, 'Release Date', releaseDate?.toString() ?? 'Unavailable'),
+          _detailRow(
+            Icons.calendar_today_rounded,
+            'Release Date',
+            releaseDate?.toString() ?? 'Unavailable',
+          ),
           _divider(),
-          _detailRow(Icons.access_time_rounded, 'Runtime', runtime != null ? '$runtime minutes' : 'Unavailable'),
+          _detailRow(
+            Icons.access_time_rounded,
+            'Runtime',
+            runtime != null ? '$runtime minutes' : 'Unavailable',
+          ),
           _divider(),
-          _detailRow(Icons.language_rounded, 'Language', language?.toString().toUpperCase() ?? 'Unavailable'),
+          _detailRow(
+            Icons.language_rounded,
+            'Language',
+            language?.toString().toUpperCase() ?? 'Unavailable',
+          ),
           _divider(),
-          _detailRow(Icons.movie_filter_rounded, 'Status', status?.toString() ?? 'Unavailable'),
+          _detailRow(
+            Icons.movie_filter_rounded,
+            'Status',
+            status?.toString() ?? 'Unavailable',
+          ),
           if (budget != null && budget > 0) ...[
             _divider(),
-            _detailRow(Icons.attach_money_rounded, 'Budget', _formatCurrency(budget)),
+            _detailRow(
+              Icons.attach_money_rounded,
+              'Budget',
+              _formatCurrency(budget),
+            ),
           ],
           if (revenue != null && revenue > 0) ...[
             _divider(),
-            _detailRow(Icons.trending_up_rounded, 'Revenue', _formatCurrency(revenue)),
+            _detailRow(
+              Icons.trending_up_rounded,
+              'Revenue',
+              _formatCurrency(revenue),
+            ),
           ],
           if (productionCompanies != null && productionCompanies.isNotEmpty) ...[
             _divider(),
-            _detailRow(Icons.business_rounded, 'Production', productionCompanies),
+            _detailRow(
+              Icons.business_rounded,
+              'Production',
+              productionCompanies,
+            ),
           ],
         ],
       ),
@@ -392,18 +490,21 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     }
 
     final credits = _details?['credits'];
+
     if (credits == null) {
       return const SizedBox.shrink();
     }
 
     final List cast = credits['cast'] ?? [];
+
     if (cast.isEmpty) {
       return const SizedBox.shrink();
     }
 
     final visibleCast = cast
         .where((actor) =>
-            actor['profile_path'] != null && actor['profile_path'].toString().isNotEmpty)
+            actor['profile_path'] != null &&
+            actor['profile_path'].toString().isNotEmpty)
         .take(15)
         .toList();
 
@@ -418,7 +519,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           padding: EdgeInsets.symmetric(horizontal: 22),
           child: Text(
             'Cast',
-            style: TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 21,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
         const SizedBox(height: 15),
@@ -606,6 +711,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   Widget _poster() {
     final movie = widget.movie;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: movie.posterUrl.isNotEmpty

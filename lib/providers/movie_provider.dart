@@ -41,6 +41,7 @@ class MovieProvider extends ChangeNotifier {
       _errorMessage = e.toString();
       if (_errorMessage != null && _errorMessage!.contains('No internet connection')) {
         _errorMessage = 'No internet connection. Please check your network.';
+        _movies = [];
       }
     }
 
